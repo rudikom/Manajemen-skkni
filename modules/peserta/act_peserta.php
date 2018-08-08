@@ -4,8 +4,39 @@
 	$act = @$_GET['act'];
 
 	
-	
-	if ($mod == 'peserta' AND $act == 'simpan') {
+	if ($mod == 'peserta' AND $act == 'cari') {
+		
+		if (isset($_POST['cari'])) {
+				$query = mysql_query("select tb_skema.nama_skema,tb_peserta.nama
+				from tb_peserta left join tb_skema on tb_peserta.id_skema = tb_skema.id_skema
+				where tb_peserta.id_skema= '$_POST[cari]'") or die(mysql_error());
+				$jumlah = mysql_num_rows($query);
+				echo "<h1>Jumlah Peserta : ".$jumlah." Orang</h1>";
+				echo"<ul>";
+					while ($b = mysql_fetch_assoc($query)) {
+						echo "<h3>".$b['nama_skema']."</h3><br>";
+						echo"<li>".$b['nama']."</li>";
+					}
+					
+				echo"</ul>";
+			} else {
+				echo"<script>
+					alert('Data peserta tidak ditemukan...');
+					window.location=('../../index.php')
+				</script>";
+			}		
+
+		
+		
+	//$jumall = mysql_fetch_assoc(mysql_query("select count(*) as jumlah from tb_peserta"));
+	/*			if(@$proses){
+				$jumskema = mysql_fetch_assoc(mysql_query("select * from tb_peserta left join tb_skema on tb_peserta.id_skema = tb_skema.id_skema
+				where tb_peserta.id_skema='.@$_POST[cari].'"));
+				}
+					//echo "Jumlah Peserta adalah ".$jumall['jumlah'];
+					//echo "Jumlah Peserta adalah ".$jumskema['jumlah'];*/
+	}
+	elseif ($mod == 'peserta' AND $act == 'simpan') {
 
 		mysql_query("INSERT INTO tb_peserta(nik,
 											id_skema,

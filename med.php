@@ -26,7 +26,8 @@ $( function() {
 			<h1>Soal Praktek Aplikasi Database </h1>
 			<p>
 				<a href="med.php?mod=peserta&act=form">ADD PESERTA</a> |
-				<a href="med.php?mod=peserta">VIEW PESERTA</a>
+				<a href="med.php?mod=peserta">VIEW PESERTA</a> |
+				<a href="med.php?mod=peserta&act=cari">LAPORAN</a>
 			</p>
 			<?php
 				include"content.php";

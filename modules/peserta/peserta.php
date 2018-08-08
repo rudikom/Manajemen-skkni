@@ -1,11 +1,39 @@
 <?php
-
 	$action = "modules/peserta/act_peserta.php";
 	$act = @$_GET['act'];
 
 	switch ($act) {
 		case 'cari':
-		
+			echo"
+				<form method='POST' action='' >
+				<SELECT name=cari>
+						<option value='1'>Programmer Madya</option>
+						<option value='2'>Multimedia</option>
+						<option value='3'>Networking</option>
+					 </select>
+				<input type='submit' name='submit' value='proses'>
+				</form>";
+				
+				
+				if (isset($_POST['submit'])) {
+					//ini query untuk menampilkan skema
+					$q = mysql_fetch_assoc(mysql_query("select * from tb_skema where id_skema='$_POST[cari]'"));
+					
+					echo "<h3>".$q['nama_skema']."</h3>";
+					
+					$query = mysql_query("select tb_skema.nama_skema,tb_peserta.nama
+					from tb_peserta left join tb_skema on tb_peserta.id_skema = tb_skema.id_skema
+					where tb_peserta.id_skema= '$_POST[cari]'") or die(mysql_error());
+					$jumlah = mysql_num_rows($query);
+					echo "<h3>Jumlah Peserta ".$q['nama_skema'].": ".$jumlah." Orang</h3>";
+					echo"<ul>";
+						while ($b = mysql_fetch_assoc($query)) {
+							echo"<li>".$b['nama']."</li>";
+						}
+						
+					echo"</ul>";
+				}
+			
 		
 		break;
 		case 'form':
@@ -249,25 +277,7 @@
 					}
 				}
 			echo"</table> <br>";
-				echo"
-				<form method='GET' action='med.php?mod=peserta&act=jumlah&cari=$cari'>
-				<SELECT name=cari>
-						<option value='1'>Programmer Madya</option>
-						<option value='2'>Multimedia</option>
-						<option value='3'>Networking</option>
-					 </select>
-				<input type ='submit' value='proses'>
-				</form>"
-					 
-					;
-					 
-				//$jumall = mysql_fetch_assoc(mysql_query("select count(*) as jumlah from tb_peserta"));
-				if(@$proses){
-				$jumskema = mysql_fetch_assoc(mysql_query("select * from tb_peserta left join tb_skema on tb_peserta.id_skema = tb_skema.id_skema
-				where tb_peserta.id_skema='.@$_GET[cari].'"));
-				}
-					//echo "Jumlah Peserta adalah ".$jumall['jumlah'];
-					//echo "Jumlah Peserta adalah ".$jumskema['jumlah'];
+				
 				
 			
 			
@@ -276,3 +286,4 @@
 			break;
 	}
 ?>
+ 
