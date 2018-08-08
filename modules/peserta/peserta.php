@@ -220,7 +220,7 @@
 							<td>".$data['email']."</td>
 							<td>".$data['organisasi']."</td>
 							<td>".$data['status']."</td>
-							<td>".$data['tgl_terbit_sk']."  <br> Lokasi TUK : ".$data['tuk']."</td>
+							<td>".$data['tgl_terbit_sk']."  <br> <a href='med.php?mod=peserta&act=jumlah&id='".$data['tuk']."'>Lokasi TUK : ".$data['tuk']."</a></td>
 							<td><a href='med.php?mod=peserta&act=editform&id=$id'>EDIT</a> |
 									<a href='".$action."?mod=peserta&act=delete&id=$id'>DELETE</a>
 							</td>
@@ -229,7 +229,13 @@
 						$no++;
 					}
 				}
-			echo"</table>";
+			echo"</table> <br>";
+			
+				$jum = mysql_fetch_assoc(mysql_query("select count(*) as jumlah from tb_peserta"));
+					echo "Jumlah Peserta adalah ".$jum['jumlah'];
+				
+			
+			
 
 
 			break;
