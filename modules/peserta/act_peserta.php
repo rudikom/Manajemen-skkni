@@ -3,6 +3,8 @@
 	$mod = @$_GET['mod'];
 	$act = @$_GET['act'];
 
+	
+	
 	if ($mod == 'peserta' AND $act == 'simpan') {
 
 		mysql_query("INSERT INTO tb_peserta(nik,

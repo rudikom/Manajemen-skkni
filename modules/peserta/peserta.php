@@ -4,9 +4,14 @@
 	$act = @$_GET['act'];
 
 	switch ($act) {
+		case 'cari':
+		
+		
+		break;
 		case 'form':
 
-			echo"<h3 style='align=center'> Data Peserta</h3><form action='".$action."?mod=peserta&act=simpan' class='form' method='post'>
+			echo"<h3 style='align=center'> Data Peserta</h3>
+			<form action='".$action."?mod=peserta&act=simpan' class='form' method='post'>
 				<table width='100%'>
 					<tr>
 						<td width='150px'>NIK</td>
@@ -184,7 +189,16 @@
 
 
 			break;
-
+		case "jumlah":
+		$getlokasi='$_GET[id_lokasi]';
+				$query2 = "SELECT count(*) as lokasijumlah FROM tb_peserta a
+									left join tb_lokasi c on c.id_lok=a.id_lokasi
+									where id_lok='.$getlokasi.'
+									";
+				$result = mysql_query($query) or die(mysql_error());
+				//$temukan2 = mysql_num_rows($result);
+		echo "Jumlah Peserta Berdasarkan Lokasi $result[lokasijumlah]";
+		break;
 		default:
 			echo"<table class='table'>
 				<tr>
@@ -194,15 +208,17 @@
 					<th>TGL. LAHIR</th>
 					<th>NO. HP</th>
 					<th>EMAIL</th>
+					<th>SKEMA</th>
 					<th>ORGANISASI</th>
 					<th>REKOMENDASI</th>
 					<th>TGL. TERBIT S.</th>
 					<th>Action</th>
 				</tr>";
 
-				$query = "SELECT a.*,b.*,c.* FROM tb_peserta a
+				$query = "SELECT a.*,b.*,c.*,d.* FROM tb_peserta a
 									left join tb_lokasi c	on c.id_lok=a.id_lokasi
 									left join tb_hasil_sertifikasi b	on a.id=b.id_peserta
+									left join tb_skema d on d.id_skema = a.id_skema 
 									ORDER BY a.tgl_lahir ASC";
 				$result = mysql_query($query) or die(mysql_error());
 				$temukan = mysql_num_rows($result);
@@ -211,6 +227,7 @@
 					$no = 1;
 					while ($data = mysql_fetch_assoc($result)) {
 						$id=$data['id'];
+						$id_lok=$data['id_lok'];
 						echo"<tr>
 							<td>".$no."</td>
 							<td>".$data['nik']."</td>
@@ -218,9 +235,11 @@
 							<td>".$data['tgl_lahir']."</td>
 							<td>".$data['hp']."</td>
 							<td>".$data['email']."</td>
+							<td>".$data['nama_skema']."</td>
 							<td>".$data['organisasi']."</td>
 							<td>".$data['status']."</td>
-							<td>".$data['tgl_terbit_sk']."  <br> <a href='med.php?mod=peserta&act=jumlah&id='".$data['tuk']."'>Lokasi TUK : ".$data['tuk']."</a></td>
+							<td>".$data['tgl_terbit_sk']."  <br> 
+							<a href='med.php?mod=peserta&act=jumlah&id_lokasi=$id_lok'>Lokasi TUK : ".$data['tuk']."</a></td>
 							<td><a href='med.php?mod=peserta&act=editform&id=$id'>EDIT</a> |
 									<a href='".$action."?mod=peserta&act=delete&id=$id'>DELETE</a>
 							</td>
@@ -230,9 +249,25 @@
 					}
 				}
 			echo"</table> <br>";
-			
-				$jum = mysql_fetch_assoc(mysql_query("select count(*) as jumlah from tb_peserta"));
-					echo "Jumlah Peserta adalah ".$jum['jumlah'];
+				echo"
+				<form method='GET' action='med.php?mod=peserta&act=jumlah&cari=$cari'>
+				<SELECT name=cari>
+						<option value='1'>Programmer Madya</option>
+						<option value='2'>Multimedia</option>
+						<option value='3'>Networking</option>
+					 </select>
+				<input type ='submit' value='proses'>
+				</form>"
+					 
+					;
+					 
+				//$jumall = mysql_fetch_assoc(mysql_query("select count(*) as jumlah from tb_peserta"));
+				if(@$proses){
+				$jumskema = mysql_fetch_assoc(mysql_query("select * from tb_peserta left join tb_skema on tb_peserta.id_skema = tb_skema.id_skema
+				where tb_peserta.id_skema='.@$_GET[cari].'"));
+				}
+					//echo "Jumlah Peserta adalah ".$jumall['jumlah'];
+					//echo "Jumlah Peserta adalah ".$jumskema['jumlah'];
 				
 			
 			
