@@ -6,7 +6,7 @@
 	switch ($act) {
 		case 'form':
 
-			echo"<h3>Tambah Data Peserta</h3><form action='".$action."?mod=peserta&act=simpan' class='form' method='post'>
+			echo"<h3 style='align=center'> Data Peserta</h3><form action='".$action."?mod=peserta&act=simpan' class='form' method='post'>
 				<table width='100%'>
 					<tr>
 						<td width='150px'>NIK</td>
@@ -160,8 +160,8 @@
 							<td>:</td>
 							<td>
 								<select name='rekomendasi'>
-									<option value='BERKOMPETENSI'>BERKOMPETENSI</option>
-									<option value='BELUM BERKOMPETENSI'>BELUM BERKOMPETENSI</option>
+									<option value='KOMPETEN'>BERKOMPETENSI</option>
+									<option value='BELUM KOMPETEN'>BELUM BERKOMPETENSI</option>
 								</select>
 							</td>
 						</tr>

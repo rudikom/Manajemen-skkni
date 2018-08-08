@@ -41,25 +41,25 @@
 
   		mysql_query("UPDATE tb_peserta
 
-        SET nik='$_POST[nik]',
+					SET nik='$_POST[nik]',
 					id_skema='$_POST[skema]',
-  			id_lokasi='$_POST[lokasi]',
-  			nama='$_POST[nama]',
-  			tgl_lahir='$_POST[tgl_lahir]',
-  					hp='$_POST[hp]',
-  				email='$_POST[email]',
-  				organisasi='$_POST[organisasi]'
-  												where id='$_POST[id_peserta]
-													'") or die(mysql_error());
+					id_lokasi='$_POST[lokasi]',
+					nama='$_POST[nama]',
+					tgl_lahir='$_POST[tgl_lahir]',
+					hp='$_POST[hp]',
+					email='$_POST[email]',
+					organisasi='$_POST[organisasi]'
+					where id='$_POST[id_peserta]
+					'") or die(mysql_error());
 
-						mysql_query("UPDATE tb_hasil_sertifikasi
-							        SET
-							  											id_peserta='$_POST[id_peserta]',
-							  											tgl_terbit_sk='$_POST[tgl_terbit]',
-							  											status='$_POST[rekomendasi]'
-																			where id_peserta='$_POST[id_peserta]'
+					mysql_query("UPDATE tb_hasil_sertifikasi
+				    SET id_peserta='$_POST[id_peserta]',
+					tgl_terbit_sk='$_POST[tgl_terbit]',
+					status='$_POST[rekomendasi]'
+					
+					where id_peserta='$_POST[id_peserta]'
 
-							  									") or die(mysql_error());
+					") or die(mysql_error());
   		echo"<script>
   			alert('Berhasil melakukan update data peserta...');
   			window.location=('../../index.php')
